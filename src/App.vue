@@ -1,14 +1,17 @@
 <template>
 	<div id="app">
 		<h1>Tarefas</h1>
+		<NewTask @taskAdded="addTask" />
 		<TaksGrid :tasks="tasks" />
 	</div>
 </template>
 
 <script>
-import TaksGrid from '@/components/TaskGrid.vue'
+import TaksGrid from '@/components/TaskGrid.vue';
+import NewTask from '@/components/NewTask.vue';
 
 export default {
+	components: {TaksGrid, NewTask},
 	data() {
 		return {
 			tasks: [
@@ -18,7 +21,18 @@ export default {
 			]
 		}
 	},
-	components: {TaksGrid}
+	methods: {
+		addTask(task) {
+			const sameName = t => t.name === task.name
+			const reallyNew = this.tasks.filter(sameName).length == 0
+			if(reallyNew) {
+				this.tasks.push({
+					name: task.name,
+					pending: task.pending || true
+				})
+			}
+		}
+	}
 }
 </script>
 
