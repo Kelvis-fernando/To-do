@@ -1,10 +1,13 @@
 <template>
     <div class="task-grid">
         <template v-if="tasks.length">
-            <Task v-for="task in tasks" :key="task.name" :task="task" />
+            <Task v-for="(task, i) in tasks" :key="task.name"
+                @taskDeleted="$emit('taskDeleted', i)"
+                @taskStateChanged="$emit('taskStateChanged', i)"
+                :task="task"></Task>
         </template>
-        <p class="no-task" v-else>Sua vida está em dia :)</p>
-	</div>
+        <p v-else class="no-task">Sua vida está em dia :)</p>
+    </div>
 </template>
 
 <script>
@@ -13,19 +16,19 @@ import Task from './Task.vue'
 export default {
     components: { Task },
     props: {
-        tasks: {type: Array, required: true}
+        tasks: { type: Array, required: true }
     }
 }
 </script>
 
 <style>
-	.task-grid {
+    .task-grid {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
     }
 
-    .task-grid .task{
+    .task-grid .task {
         margin: 10px;
     }
 
