@@ -1,4 +1,4 @@
-# todo
+# To-do
 
 ## Project setup
 ```
